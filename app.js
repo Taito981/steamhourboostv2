@@ -5,18 +5,16 @@ const R = require("ramda")
 const Promise = require("bluebird")
 
 const SteamAccount = require("./steamaccount")
-const migrate = require("./migrate")
 const manageDB = require("./database")
 
-migrate()
 const database = manageDB.read()
 
-const telebot = require("./telebot")
-telebot()
+/*const telebot = require("./telebot")
+telebot()*/
 
 if (database.length === 0) {
   console.error(
-    "[!] No accounts have been added! Please run 'npm run user' to add accounts!"
+    "[!] No accounts have been added! Please run 'node user' to add accounts!"
   )
   process.exit(0)
 }
@@ -33,11 +31,11 @@ const accounts = database
 const restartBoost = () => {
   console.log("[=] Restart boosting")
   return Promise.map(accounts, _.method("restartGames"))
-    .delay(1800000)
+    .delay(30000)
     .finally(restartBoost)
 }
 
 console.log("[=] Start boosting")
 Promise.map(accounts, _.method("boost"))
-  .delay(1800000)
+  .delay(30000)
   .then(restartBoost)

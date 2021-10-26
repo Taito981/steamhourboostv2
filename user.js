@@ -5,10 +5,8 @@ const SteamUser = require("steam-user")
 const SteamTotp = require("steam-totp")
 const inquirer = require("inquirer")
 
-const migrate = require("./migrate")
 const manageDB = require("./database")
 
-migrate()
 const database = manageDB.read()
 
 const promptGames = {
@@ -25,7 +23,7 @@ const promptGames = {
 inquirer
   .prompt([
     { name: "username", message: "Username:" },
-    { name: "password", message: "Password:", type: "password" }
+    { name: "password", message: "Password:" }
   ])
   .then(({ username, password }) => {
     let index = R.findIndex(R.propEq("name", username), database)
@@ -54,8 +52,7 @@ inquirer
         .prompt([
           {
             name: "secret",
-            message: "Two-factor shared secret:",
-            type: "password"
+            message: "Two-factor shared secret:"
           }
         ])
         .then(({ secret }) =>
