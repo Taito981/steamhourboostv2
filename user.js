@@ -23,7 +23,7 @@ const promptGames = {
 inquirer
   .prompt([
     { name: "username", message: "Username:" },
-    { name: "password", message: "Password:" }
+    { name: "password", message: "Password:", type: "password" }
   ])
   .then(({ username, password }) => {
     let index = R.findIndex(R.propEq("name", username), database)
@@ -52,7 +52,8 @@ inquirer
         .prompt([
           {
             name: "secret",
-            message: "Two-factor shared secret:"
+            message: "Two-factor shared secret:",
+            type: "password"
           }
         ])
         .then(({ secret }) =>
