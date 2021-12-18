@@ -6,6 +6,7 @@ const SteamTotp = require("steam-totp")
 const Promise = require("bluebird")
 const moment = require("moment")
 const EventEmitter = require("events")
+EventEmitter.setMaxListener(Infinity)
 
 module.exports = class SteamAccount extends EventEmitter {
   constructor(name, password, sentry, secret, games, indent = 0) {
